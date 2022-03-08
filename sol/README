@@ -1,0 +1,27 @@
+IONESCU MARTIN 333CA
+
+
+Pentru rezolvare temei am efectuat pasii urmatori:
+
+1. Am creat procesele necesare date ca parametru
+2. Am citit in procesele de tip coordonator din fisierle cluster si am preluat datele
+3. Prima etapa de comunicare intre procese;
+    - Am transmis datele citite de coordonatori intre ei, astfel creand un struct
+      process_map ce contine datele despre coordonatori si despre rangul workeriloece sunt
+      asignati si cati sunt la numar
+    - Am trasnsmis map-ul creat intre coordonatori catre workeri, resperctand legaturile stabilite
+    - Am afisat topologia (adica map-ul) pe fiecare proces
+4. A doua etapa de comunicare
+    - Am creat vectorul de elemente conform enuntului
+    - Am impartit catre coordonatori vectroul in functie de numarul de workeri asignati la
+     fiecare si am trimis bucatile de vector corespunzatoare
+    - Fiecare coordonator a trebuit sa primeasca datele sa le imparta in mod egal
+     si sa trimita mai departe workerilor.
+    - Workerii primesc vectorul impartit si de coordonator, il dubleaza si mai apoi
+      il trimit inapoi catre coordonatorul ce l-a trimis
+    - coordonatorii preiau datele si le asambleaza la loc apoi trimit inapoi la coordonatorul0
+    - coordonatorul 0 preia datele de la restul coordonatorilor asambleaza cu totul vectorul initial
+    si il afiseaza pe ecran
+5. Toate trimiterile de date intre procese au fost logate
+Pentru trimiterea unui vector in cadrul temei a trebuit mai intai sa se faca trimiterea unui MPI_INT
+ce reprezenta dimensiune vectorului si apoi vectorului propriu-zis
